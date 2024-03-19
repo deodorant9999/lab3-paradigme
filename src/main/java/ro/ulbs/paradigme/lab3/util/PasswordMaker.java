@@ -8,14 +8,22 @@ public class PasswordMaker {
     private static final int MAGIC_NUMBER=23;
     private static final String MAGIC_STRING=RandomStringGenerator(MAGIC_NUMBER);
     private static int counter=0;
-    private static PasswordMaker instance=null;
+    private static PasswordMaker instance;
+    static {
+        instance = null;
+    }
+
     private PasswordMaker(String name)
     {
         this.name=name;
     }
     public static PasswordMaker getInstance(String name)
     {
-        if(counter==0) {instance=new PasswordMaker(name);counter++;}
+        if(counter==0)
+        {
+            instance=new PasswordMaker(name);
+            counter++;
+        }
         return instance;
     }
     public static String RandomStringGenerator(int length)
