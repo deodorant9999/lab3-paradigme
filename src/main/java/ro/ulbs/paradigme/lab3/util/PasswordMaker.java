@@ -5,12 +5,19 @@ package ro.ulbs.paradigme.lab3.util;
 public class PasswordMaker {
     private String name;
     private String password="";
-    public PasswordMaker(String name)
+    private static final int MAGIC_NUMBER=23;
+    private static final String MAGIC_STRING=RandomStringGenerator(MAGIC_NUMBER);
+    private static int counter=0;
+    private static PasswordMaker instance=null;
+    private PasswordMaker(String name)
     {
         this.name=name;
     }
-    static final int MAGIC_NUMBER=23;
-    static final String MAGIC_STRING=RandomStringGenerator(MAGIC_NUMBER);
+    public static PasswordMaker getInstance(String name)
+    {
+        if(counter==0) {instance=new PasswordMaker(name);counter++;}
+        return instance;
+    }
     public static String RandomStringGenerator(int length)
     {
         int st=97;
@@ -18,7 +25,7 @@ public class PasswordMaker {
         String randomString="";
         for(int i=0;i<length;i++)
         {
-            char c=(char)(st+Math.random()*(dr-st));
+            char c=(char)(st+Math.random()*(dr-st+1));
             randomString=randomString+c;
         }
         return randomString;
